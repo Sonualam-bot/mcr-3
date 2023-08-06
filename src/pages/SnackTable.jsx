@@ -3,10 +3,14 @@ import { SnackContext } from "../context/SnackContext"
 import "./Table.css"
 
 export const SnackTable = () => {
-    const { state: { snackDb, sortOrder }, sortById, sortByPName, sortByPrice, sortByCalories, sortByIngredients, sortByPweight } = useContext(SnackContext)
+    const { state: { sortOrder }, sortById, sortByPName, sortByPrice, sortByCalories, sortByIngredients, sortByPweight, handleSearchInput, handleSearch } = useContext(SnackContext)
     return (
         <>
             <div className="tableContainer" >
+
+                <div className="input" >
+                    <input type="text" placeholder="search by title and ingredients" onChange={handleSearchInput} />
+                </div>
 
 
                 <table  >
@@ -23,7 +27,7 @@ export const SnackTable = () => {
                     </thead>
 
                     <tbody>
-                        {snackDb.map((snack) => {
+                        {handleSearch.map((snack) => {
                             const { id, product_name, product_weight, price, calories, ingredients } = snack;
                             return (
                                 <tr className="tableRow" key={id}>

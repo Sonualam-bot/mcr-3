@@ -13,5 +13,15 @@
 
 .tableContainer {
   margin: 2rem auto;
-  margin-left: 2rem;
+  margin-left: 5rem;
+}
+
+.input {
+  margin: 1.2rem;
+}
+
+.input input {
+  width: 250px;
+  border-radius: 15px;
+  padding: 0.7rem;
 }

@@ -7,11 +7,15 @@ export const SnackContext = createContext();
 export const SnackContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(SnackReducer, initialState);
 
+    const handleSearch = state.searchValue === "" ? state.snackDb :
+        state.snackDb?.filter((snack) => snack.product_name?.toLowerCase().includes(state?.searchValue?.toLowerCase()) || snack.ingredients?.join().toLowerCase().includes(state.searchValue.toLowerCase()))
+
     const newSortOrder = state.sortOrder === "ascending" ? "descending" : "ascending";
 
 
+
     const sortById = () => {
-        const sortedSnackDb = [...state.snackDb].sort((a, b) => {
+        const sortedSnackDb = handleSearch.sort((a, b) => {
             if (newSortOrder === "ascending") {
                 return a.id - b.id;
             } else {
@@ -29,7 +33,7 @@ export const SnackContextProvider = ({ children }) => {
     };
 
     const sortByPName = () => {
-        const sortedSnackDbByPName = [...state.snackDb].sort((a, b) => {
+        const sortedSnackDbByPName = handleSearch.sort((a, b) => {
             if (newSortOrder === "ascending") {
                 return a.product_name.localeCompare(b.product_name);
             } else {
@@ -47,7 +51,7 @@ export const SnackContextProvider = ({ children }) => {
 
 
     const sortByPrice = () => {
-        const sortedSnackDByPrice = [...state.snackDb].sort((a, b) => {
+        const sortedSnackDByPrice = handleSearch.sort((a, b) => {
             if (newSortOrder === "ascending") {
                 return a.price - b.price;
             } else {
@@ -64,7 +68,7 @@ export const SnackContextProvider = ({ children }) => {
         });
     };
     const sortByCalories = () => {
-        const sortedSnackDBycalories = [...state.snackDb].sort((a, b) => {
+        const sortedSnackDBycalories = handleSearch.sort((a, b) => {
             if (newSortOrder === "ascending") {
                 return a.calories - b.calories;
             } else {
@@ -83,7 +87,7 @@ export const SnackContextProvider = ({ children }) => {
 
 
     const sortByIngredients = () => {
-        const sortedSnackDByIngredients = [...state.snackDb].sort((a, b) => {
+        const sortedSnackDByIngredients = handleSearch.sort((a, b) => {
             const ingredientsA = a.ingredients.join(", ");
             const ingredientsB = b.ingredients.join(", ");
 
@@ -107,7 +111,7 @@ export const SnackContextProvider = ({ children }) => {
 
 
     const sortByPweight = () => {
-        const sortedSnackDByPWeignt = [...state.snackDb].sort((a, b) => {
+        const sortedSnackDByPWeignt = handleSearch.sort((a, b) => {
             if (newSortOrder === "ascending") {
                 return parseInt(a.product_weight) - parseInt(b.product_weight);
             } else {
@@ -125,6 +129,15 @@ export const SnackContextProvider = ({ children }) => {
     };
 
 
+    const handleSearchInput = (e) => {
+        dispatch({
+            type: "SEARCH",
+            payload: {
+                searchValue: e.target.value
+            }
+        })
+    }
+
 
     const value = {
         state,
@@ -133,7 +146,9 @@ export const SnackContextProvider = ({ children }) => {
         sortByPrice,
         sortByCalories,
         sortByIngredients,
-        sortByPweight
+        sortByPweight,
+        handleSearchInput,
+        handleSearch
     }
 
 

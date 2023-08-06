@@ -2,7 +2,8 @@ import { snacks } from "../Utils/SnackData";
 
 export const initialState = {
     snackDb: snacks,
-    sortOrder: "ascending"
+    sortOrder: "ascending",
+    searchValue: ""
 }
 
 
@@ -22,6 +23,8 @@ export const SnackReducer = (state, action) => {
             return { ...state, snackDb: payload.sortedSnackDByIngredients, sortOrder: payload.sortOrder }
         case "SORT_BY_PWEIGHT":
             return { ...state, snackDb: payload.sortedSnackDByPWeignt, sortOrder: payload.sortOrder }
+        case "SEARCH":
+            return { ...state, searchValue: payload.searchValue }
         default:
             throw new Error(`Unknown action type ${action.type}`)
     }
