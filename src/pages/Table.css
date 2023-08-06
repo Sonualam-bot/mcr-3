@@ -1,0 +1,17 @@
+.tableContainer table > thead > tr > th,
+.tableRow td {
+  border: 1px solid black;
+  min-width: 130px;
+  min-height: 100px;
+  padding: 1.3rem;
+}
+
+.tableContainer table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.tableContainer {
+  margin: 2rem auto;
+  margin-left: 2rem;
+}
